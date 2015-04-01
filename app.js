@@ -32,8 +32,15 @@ app.post('/post', function(req, res){
     url: url,
     body: JSON.stringify(options)
   };
-  request.post(requestParams, function(err,res,body) {
+  request.post(requestParams, function(err, res, body) {
     console.log(req.body)
+  });
+
+  var requestCallback = {
+    url: req.body.callback_url,
+    body: req.body
+  };
+  request.post(requestCallback, function(err, res, body) {
   });
 });
 
