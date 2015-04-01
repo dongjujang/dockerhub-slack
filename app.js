@@ -24,12 +24,13 @@ app.post('/post', function(req, res){
 
   res.json('');
 
-  JSON.stringify(req.body, null, 4);
-  var result = JSON.stringify(req.body, null, "\t");
+//  JSON.stringify(req.body, null, 4);
+//  var result = JSON.stringify(req.body, null, "\t");
+  var result = "[" + req.body.repo_name + "] " + "Dockerfile built by " + req.body.pusher + "\n" + req.body.repo_url
 
   var options = {
     text: result,
-    username: 'build bot'
+    username: 'dockerhub build bot'
   };
   var requestParams = {
     url: url,
