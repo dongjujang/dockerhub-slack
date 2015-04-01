@@ -5,29 +5,25 @@ var raven = require('raven');
 var request = require('request');
 var port = process.env.PORT || 8888;
 var url = process.env.WEBHOOK_URL || '';
+var sentry = process.env.SENTRY_DSN || '';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(raven.middleware.express(process.env.SENTRY_DSN || ''));
+app.use(raven.middleware.express(sentry));
 
 app.get('/*', function(req, res){
-
-  throw new Error('Broke!');
-  res.send(Error);
+  res.send('');
 });
 
 app.post('/post', function(req, res){
-  if (!req.body || !url) {
+  if (!req.body || !url || !sentry) {
     res.status(500).json('');
     return;
   }
 
   res.json('');
 
-//  JSON.stringify(req.body, null, 4);
-//  var result = JSON.stringify(req.body, null, "\t");
-  var result = "[" + req.body.repository.repo_name + "] " + "Dockerfile built by " + req.body.push_data.pusher + "\n" + req.body.repository.repo_url
-
+  var result = "[" + req.body.repository.repo_name + "] " + req.body.repository.name + " built by " + req.body.push_data.pusher + "\n" + req.body.repository.repo_url
   var options = {
     text: result,
     username: 'dockerhub build bot'
