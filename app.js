@@ -26,7 +26,7 @@ app.post('/post', function(req, res){
 
 //  JSON.stringify(req.body, null, 4);
 //  var result = JSON.stringify(req.body, null, "\t");
-  var result = "[" + req.body.repo_name + "] " + "Dockerfile built by " + req.body.pusher + "\n" + req.body.repo_url
+  var result = "[" + req.body.repository.repo_name + "] " + "Dockerfile built by " + req.body.push_data.pusher + "\n" + req.body.repository.repo_url
 
   var options = {
     text: result,
